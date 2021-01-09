@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api\v1\Auth;
 
-use App\Http\Controllers\Api\ApiController;
+use App\Http\Controllers\ApiController;
 use App\Http\Resources\UserResource;
 use App\Mail\ForgotPassword;
 use App\Models\User;
