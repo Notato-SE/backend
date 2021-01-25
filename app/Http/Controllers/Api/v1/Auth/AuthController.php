@@ -21,7 +21,7 @@ class AuthController extends ApiController
 {
     public function login(Request $request)
     {
-        dd(asset("images/logo.png"));
+        //dd(asset("images/logo.png"));
         $credential = $request->validate([
             "email" => ["required", "string", "max:255"],
             "password" => ["required", "string", "max:255"],
@@ -153,17 +153,6 @@ class AuthController extends ApiController
 
         return $this->okWithData(new UserResource($user));
     }
-
-
-
-
-
-
-
-
-
-
-
 
     private function makeRequest($grant_type, $email = null, $password = null)
     {
