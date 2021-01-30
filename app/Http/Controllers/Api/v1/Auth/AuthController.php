@@ -21,7 +21,6 @@ class AuthController extends ApiController
 {
     public function login(Request $request)
     {
-        dd(asset("images/logo.png"));
         $credential = $request->validate([
             "email" => ["required", "string", "max:255"],
             "password" => ["required", "string", "max:255"],
@@ -37,8 +36,7 @@ class AuthController extends ApiController
     public function signup(Request $request)
     {
         $data = $request->validate([
-            "first_name" => ["required", "string", "max:255"],
-            "last_name" => ["required", "string", "max:255"],
+            "full_name" => ["required", "string", "max:255"],
             "email" => ["required", "unique:users,email"],
             "password" => ["required", "string", new PasswordRule, "confirmed"]
         ]);
@@ -120,8 +118,7 @@ class AuthController extends ApiController
     public function updateProfile(Request $request)
     {
         $data = $request->validate([
-            "first_name" => ["required", "string", "max:255"],
-            "last_name" => ["required", "string", "max:255"],
+            "full_name" => ["required", "string", "max:255"],
         ]);
 
         $user = curAuth();
@@ -131,21 +128,21 @@ class AuthController extends ApiController
         return $this->updated(new UserResource($user));
     }
 
-    public function deleteAccount(Request $request)
-    {
-        $request->validate([
-            "password" => ["required", "string", "max:255"],
-        ]);
+    // public function deleteAccount(Request $request)
+    // {
+    //     $request->validate([
+    //         "password" => ["required", "string", "max:255"],
+    //     ]);
 
-        $user = curAuth();
+    //     $user = curAuth();
 
-        if (!Hash::check(request()->password, $user->password))
-            throw new AuthenticationException('The password is wrong.');
+    //     if (!Hash::check(request()->password, $user->password))
+    //         throw new AuthenticationException('The password is wrong.');
 
-        $user->delete();
+    //     $user->delete();
 
-        return $this->deleted();
-    }
+    //     return $this->deleted();
+    // }
 
     public function profile()
     {

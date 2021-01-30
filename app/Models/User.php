@@ -13,8 +13,7 @@ class User extends Authenticatable
     use HasFactory, Notifiable, HasApiTokens;
 
     protected $fillable = [
-        'first_name',
-        'last_name',
+        'full_name',
         'email',
         'password',
     ];
@@ -25,18 +24,8 @@ class User extends Authenticatable
 
     protected $casts = [];
 
-    public function setFirstNameAttribute($value)
+    public function setFullNameAttribute($value)
     {
-        $this->attributes['first_name'] = ucwords(strtolower($value));
-    }
-
-    public function setLastNameAttribute($value)
-    {
-        $this->attributes['last_name'] = ucwords(strtolower($value));
-    }
-
-    public function getFullNameAttribute()
-    {
-        return $this->first_name . " " . $this->last_name;
+        $this->attributes['full_name'] = ucwords(strtolower($value));
     }
 }
