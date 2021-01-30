@@ -14,5 +14,5 @@ Route::group(['middleware' => 'auth:api'], function () {
     $controller = "Auth\\AuthController";
     Route::put("/update-profile", "$controller@updateProfile");
     Route::get("/profile", "$controller@profile");
-    Route::delete("/delete-account", "$controller@deleteAccount");
+    // Route::delete("/delete-account", "$controller@deleteAccount");
 });

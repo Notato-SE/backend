@@ -25,7 +25,7 @@ class PasswordRule implements Rule
      */
     public function passes($attribute, $value)
     {
-        return preg_match("/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,255}$/", $value);
+        return !preg_match("/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,255}$/", $value);
     }
 
     /**

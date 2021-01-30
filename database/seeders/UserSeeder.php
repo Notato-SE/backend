@@ -16,23 +16,19 @@ class UserSeeder extends Seeder
     {
         $users = [
             [
-                "first_name" => "Vichea",
-                "last_name" => "Heng",
+                "full_name" => "Vichea Heng",
                 "email" => "vheng@paragoniu.edu.kh",
             ],
             [
-                "first_name" => "Bunnarith",
-                "last_name" => "Heang",
+                "full_name" => "Bunnarith Heang",
                 "email" => "bheang@paragoniu.edu.kh",
             ],
             [
-                "first_name" => "Sovath",
-                "last_name" => "Chean",
+                "full_name" => "Sovath Chean",
                 "email" => "schean@paragoniu.edu.kh",
             ],
             [
-                "first_name" => "Seakmeng",
-                "last_name" => "Chheang",
+                "full_name" => "Seakmeng Chheang",
                 "email" => "schheang4@paragoniu.edu.kh",
             ],
         ];
