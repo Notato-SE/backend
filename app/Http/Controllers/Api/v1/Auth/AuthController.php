@@ -82,21 +82,27 @@ class AuthController extends ApiController
 
         Mail::to(request()->email)->send(new ForgotPassword($user->full_name, $otp));
 
-        return $this->okWithMsg("Please check your email to change new password.");
+        return $this->okWithData([
+            "user_id" => $user->id,
+        ], "Please check your email to change new password.");
     }
 
     public function forgotPassword(Request $request)
     {
         $data = $request->validate([
             "otp" => ["required", "string"],
-            "user_id" => ["required", "integer", "exists:user_otp,user_id"],
+            "email" => ["required", "integer", "exists:users,email"],
             "new_password" => ["required", "string", new PasswordRule, "confirmed"],
         ]);
+
+        $user = User::where("email", $data['email'])->firstOrFail();
+
+        $data['user_id'] = $user->id;
 
         $query = DB::table('user_otp')->where("user_id", $data['user_id']);
 
         if (!($user_otp = $query->first()))
-            throw ValidationException::withMessages(["user_id" => "The selected user id is invalid."]);
+            throw ValidationException::withMessages(["email" => "The selected email is invalid."]);
 
         $user = User::findOrFail($user_otp->user_id);
 

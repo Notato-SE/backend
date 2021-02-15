@@ -20,21 +20,24 @@ class RandomizerController extends ApiController
   {
     $data = $request->validated();
 
-    $data['results']= $this->getRandomResult($data);
+    $data['results'] = $this->getRandomResult($data);
 
     return $this->okWithData($data);
   }
+
   public function save(RandomizerRequest $request)
   {
-    $userId = Auth::id();
+    // $userId = Auth::id();
+
+    $userId = curAuth()->id;
     $data = $request->validated();
     $data['user_id'] = $userId;
     $data['inputs'] = Arr::except($data, ['results', 'user_id']);
     $data['inputs'] = json_encode($data['inputs']);
     $data['results'] = json_encode($data['results']);
-  
+
     Randomizer::create($data);
-    
+
     return $this->okWithMsg("Save data succuessfully");
   }
 }

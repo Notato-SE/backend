@@ -17,8 +17,15 @@ class CreateRandomizersTable extends Migration
             $table->id();
             $table->json('inputs');
             $table->json('results');
+            // $table->unsignedInteger('user_id');
+
+            // $table->unsignedInteger('random_type');
+
             $table->unsignedInteger('user_id');
-            $table->unsignedInteger('random_type');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+
+            $table->unsignedSmallInteger('random_type');
+
             $table->timestamps();
         });
     }
