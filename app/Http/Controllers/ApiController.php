@@ -103,6 +103,13 @@ class ApiController extends BaseController
             'success' => false
         ], Response::HTTP_UNPROCESSABLE_ENTITY);
     }
+    protected function errorsWthMsg($msg)
+    {
+        return response()->json([
+            'message' => $msg,
+            'success' => false
+        ], Response::HTTP_UNPROCESSABLE_ENTITY);
+    }
 
     protected function noContent(): JsonResponse
     {

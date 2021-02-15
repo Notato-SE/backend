@@ -20,4 +20,6 @@ class Randomizer extends Model
         'results' => 'array'
     ];
 
+   public $preserveKeys = true;
+    
 }

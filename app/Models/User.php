@@ -11,7 +11,7 @@ use Laravel\Passport\HasApiTokens;
 class User extends Authenticatable
 {
     use HasFactory, Notifiable, HasApiTokens;
-
+    public $guard_name = 'api';
     protected $fillable = [
         'full_name',
         'email',
