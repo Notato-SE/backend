@@ -22,13 +22,16 @@ class RandomizerController extends ApiController
   {
     $data = $request->validated();
 
-    $data['results']= $this->getRandomResult($data);
+    $data['results'] = $this->getRandomResult($data);
 
     return $this->okWithData($data);
   }
+
   public function save(RandomizerRequest $request)
   {
-    $userId = Auth::id();
+    // $userId = Auth::id();
+
+    $userId = curAuth()->id;
     $data = $request->validated();
     if($data['random_type'] == RandomizerType::Picker)
     {
@@ -38,9 +41,9 @@ class RandomizerController extends ApiController
     $data['inputs'] = Arr::except($data, ['results', 'user_id', 'random_type']);
     $data['inputs'] = json_encode($data['inputs']);
     $data['results'] = json_encode($data['results']);
-  
+
     Randomizer::create($data);
-    
+
     return $this->okWithMsg("Save data succuessfully");
   }
   public function getRandomResults()

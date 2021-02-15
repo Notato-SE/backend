@@ -14,7 +14,7 @@ class CreateUserOtpTable extends Migration
     public function up()
     {
         Schema::create('user_otp', function (Blueprint $table) {
-            $table->unsignedBigInteger('user_id')->primary();
+            $table->unsignedInteger('user_id')->primary();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
             $table->string("otp");
