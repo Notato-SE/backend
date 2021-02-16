@@ -8,4 +8,5 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post("/randomizer/save", "$controller@save");
     Route::get("randomizer", "$controller@getRandomResults");
     Route::get("randomizer/{id}", "$controller@getRandomResultByID");
+    Route::get("randomizer/export/{id}", "$controller@export")->name('randomizer.export');
 });
