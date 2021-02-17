@@ -14,6 +14,7 @@ use App\Http\Controllers\ApiController;
 use App\Http\Resources\RandomizerResource;
 use App\Http\Resources\RandomizerCollection;
 use App\Http\Requests\Randomizer\RandomizerRequest;
+use App\Http\Requests\Randomizer\RandomizerRequestSave;
 
 class RandomizerController extends ApiController
 {
@@ -28,7 +29,7 @@ class RandomizerController extends ApiController
     return $this->okWithData($data);
   }
 
-  public function save(RandomizerRequest $request)
+  public function save(RandomizerRequestSave $request)
   {
     // $userId = Auth::id();
     $userId = curAuth()->id;

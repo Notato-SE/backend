@@ -101,4 +101,36 @@ trait RandomizerRepository
             }
         return $result;
     }
+    public function randomRule(int $randomType)
+    {
+        $rules = [];
+        switch($randomType)
+        {
+            case RandomizerType::Picker:
+                $rules = [
+                 "inputs" => "required|array",
+                 "random_type" => "required|integer",
+                 "results" => "array"
+                ];
+                break;
+            case RandomizerType::GroupPicker:
+                $rules = [
+                 "inputs" => "required|array",
+                 "group_num" => "required|integer",
+                 "random_type" => "required|integer",
+                 "results" => "array"
+                ];
+                break;
+            case RandomizerType::CustomPicker:
+                $rules = [
+                   "inputs" => "required|array",
+                   "list_num" => "required|integer",
+                   "duplicated" => "required|boolean",
+                   "random_type" => "required|integer",
+                   "results" => "array"
+                ];
+                break;
+        }
+        return $rules;
+    }
 }

@@ -93,8 +93,9 @@ class AuthController extends ApiController
     {
         $data = $request->validate([
             "otp" => ["required", "string"],
-            "email" => ["required", "integer", "exists:users,email"],
-            "new_password" => ["required", "string", new PasswordRule, "confirmed"],
+            "email" => ["required", "exists:users,email"],
+            //"new_password" => ["required", "string", new PasswordRule, "confirmed"],
+            "new_password" => ["required", "string"],
         ]);
 
         $user = User::where("email", $data['email'])->firstOrFail();

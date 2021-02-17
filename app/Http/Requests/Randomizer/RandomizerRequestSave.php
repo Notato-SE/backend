@@ -2,12 +2,10 @@
 
 namespace App\Http\Requests\Randomizer;
 
-use App\Enums\RandomizerType;
-use App\Models\Randomizer\Randomizer;
 use App\Traits\RandomizerRepository;
 use Illuminate\Foundation\Http\FormRequest;
 
-class RandomizerRequest extends FormRequest
+class RandomizerRequestSave extends FormRequest
 {
     use RandomizerRepository;
     /**
@@ -27,6 +25,7 @@ class RandomizerRequest extends FormRequest
      */
     public function rules()
     {
-        return $this->randomRule($this->input('random_type'));
+        $newRule = ["name" => "required|string"];
+        return array_merge($this->randomRule($this->input('random_type')), $newRule);
     }
 }
