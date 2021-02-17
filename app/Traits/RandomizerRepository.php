@@ -3,6 +3,7 @@
 namespace App\Traits;
 
 use App\Enums\RandomizerType;
+use App\Exports\RandomizerExport;
 
 /**
  * 
@@ -40,19 +41,64 @@ trait RandomizerRepository
     {
         $randomType = $data['random_type'];
         $result = array();
-        switch($randomType)
-        {
+        switch ($randomType) {
             case RandomizerType::Picker:
-                 $result = $this->picker($data['inputs'], 1);
-                 break;
+                $result = $this->picker($data['inputs'], 1);
+                break;
             case RandomizerType::GroupPicker:
-                 $result = $this->group_picker($data['inputs'], $data['group_num']);
+                $result = $this->group_picker($data['inputs'], $data['group_num']);
                 break;
             case RandomizerType::CustomPicker:
                 $result = $this->random_order($data['inputs'], $data['list_num'], $data['duplicated']);
                 break;
         }
 
+        return $result;
+    }
+    public function exportRandomGroup($totalGroup): array
+    {
+        foreach ($totalGroup as $group)
+           {
+              $groupList[] = array_merge(array(array_search($group, $totalGroup) +1 ), $group);
+           }
+
+        return $groupList;
+    }
+
+    public function exportOrderList($totalOrder)
+    {
+        foreach ($totalOrder as $order) {
+            $orderList[] = array(((array_search($order, $totalOrder))+1), $order);
+        }
+        return $orderList;
+    }
+    public function exportRandomizer($data)
+    {
+        $value = json_decode($data->results);
+        $randomType = $data['random_type'];
+        switch ($randomType) {
+            case RandomizerType::GroupPicker:
+                $result = $this->exportRandomGroup($value);
+                break;
+            case RandomizerType::CustomPicker:
+                $result = $this->exportOrderList($value);
+                break;
+            default: 
+               break;
+            }
+       return $result;
+    }
+    public function exportHeading($data): string
+    {
+        $randomType = $data['random_type'];
+        switch ($randomType) {
+            case RandomizerType::GroupPicker:
+                $result = "Group No";
+                break;
+            case RandomizerType::CustomPicker:
+                $result = "Order No";
+                break;
+            }
         return $result;
     }
 }

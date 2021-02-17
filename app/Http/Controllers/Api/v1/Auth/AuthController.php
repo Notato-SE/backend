@@ -26,11 +26,13 @@ class AuthController extends ApiController
             "password" => ["required", "string", "max:255"],
         ]);
 
-        if (Auth::attempt($credential)) {
-            return $this->makeRequest("password", $credential['email'], $credential['password']);
+        if (!Auth::attempt($credential)) {
+            throw new AuthenticationException('Username or password is wrong.');
         }
 
-        throw new AuthenticationException('Username or password is wrong.');
+        $res =  $this->makeRequest("password", $credential['email'], $credential['password']);
+
+        return $this->okWithData($res);
     }
 
     public function signup(Request $request)
@@ -38,7 +40,7 @@ class AuthController extends ApiController
         $data = $request->validate([
             "full_name" => ["required", "string", "max:255"],
             "email" => ["required", "unique:users,email"],
-            "password" => ["required", "string", new PasswordRule, "confirmed"]
+            "password" => ["required", "string"]
         ]);
 
         $password = $data['password'];
@@ -46,7 +48,9 @@ class AuthController extends ApiController
 
         User::create($data);
 
-        return $this->makeRequest("password", $data['email'], $password);
+        $res = $this->makeRequest("password", $data['email'], $password);
+        
+        return $this->okWithData($res);
     }
 
     public function refreshToken(Request $request)
@@ -186,6 +190,7 @@ class AuthController extends ApiController
         if ($response->getStatusCode() !== 200)
             throw new AuthenticationException($message);
 
+        //request()->headers->set('Access-Control-Allow-Origin', '*');
         request()->headers->set('Authorization', 'Bearer ' . $body['access_token']);
 
         return $body;
