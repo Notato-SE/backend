@@ -82,9 +82,7 @@ class AuthController extends ApiController
 
         Mail::to(request()->email)->send(new ForgotPassword($user->full_name, $otp));
 
-        return $this->okWithData([
-            "user_id" => $user->id,
-        ], "Please check your email to change new password.");
+        return $this->okWithMsg("Please check your email to change new password.");
     }
 
     public function forgotPassword(Request $request)
