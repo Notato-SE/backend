@@ -17,9 +17,9 @@ class Randomizer extends Model
 
     protected $cast = [
         'inputs' => 'array',
-        'results' => 'array'
+        'results' => 'array',
+        "created_at" => 'datetime',
     ];
 
-   public $preserveKeys = true;
-    
+    public $preserveKeys = true;
 }

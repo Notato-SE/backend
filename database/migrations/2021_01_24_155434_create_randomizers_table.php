@@ -27,6 +27,8 @@ class CreateRandomizersTable extends Migration
             $table->unsignedSmallInteger('random_type');
 
             $table->timestamps();
+
+            $table->index("created_at");
         });
     }
 

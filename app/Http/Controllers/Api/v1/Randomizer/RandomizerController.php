@@ -43,9 +43,13 @@ class RandomizerController extends ApiController
 
     return $this->okWithMsg("Save data succuessfully");
   }
+  public function getUserSavedList()
+  {
+    return $this->okWithData(RandomizerResource::collection(Randomizer::where("user_id", curAuth()->id)->orderByDesc("created_at")->get()));
+  }
   public function getRandomResults()
   {
-      return $this->okWithData(new RandomizerCollection(Randomizer::paginate()));
+    return $this->okWithData(new RandomizerCollection(Randomizer::paginate()));
   }
   public function getRandomResultByID(int $id)
   {
@@ -53,10 +57,10 @@ class RandomizerController extends ApiController
   }
   public function export(int $id)
   {
-      $data =  Randomizer::findOrFail($id);
-      if($data['random_type'] == RandomizerType::Picker)
-        return $this->errorsWthMsg("Exporting random picker is not allowed.");
-       
-      return Excel::download(new RandomizerExport($id, $this->exportHeading($data), $this->exportRandomizer($data)), 'random.xls');
+    $data =  Randomizer::findOrFail($id);
+    if ($data['random_type'] == RandomizerType::Picker)
+      return $this->errorsWthMsg("Exporting random picker is not allowed.");
+
+    return Excel::download(new RandomizerExport($id, $this->exportHeading($data), $this->exportRandomizer($data)), 'random.xls');
   }
 }
