@@ -4,6 +4,7 @@ namespace App\Traits;
 
 use App\Enums\RandomizerType;
 use App\Exports\RandomizerExport;
+use Maatwebsite\Excel\Concerns\ToArray;
 
 /**
  * 
@@ -13,7 +14,7 @@ trait RandomizerRepository
     public function picker(array $arr, int $num)
     {
         array_random($arr, $num);
-        return array_rand(array_flip($arr), $num);
+        return array(array_rand(array_flip($arr), $num));
     }
 
     public function group_picker(array $arr, int $group_num)
@@ -35,7 +36,7 @@ trait RandomizerRepository
             $newArray = array_rand(array_flip($arr), $qty);
         }
 
-        return $newArray;
+        return array($newArray);
     }
     public function getRandomResult($data)
     {
