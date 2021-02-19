@@ -33,10 +33,10 @@ trait RandomizerRepository
                 $newArray[$i] = $arr[rand(0, count($arr) - 1)];
             }
         } else {
-            $newArray = array_rand(array_flip($arr), $qty);
+            $newArray = array(array_rand(array_flip($arr), $qty));
         }
 
-        return array($newArray);
+        return $newArray;
     }
     public function getRandomResult($data)
     {
