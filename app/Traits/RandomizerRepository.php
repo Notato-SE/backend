@@ -58,10 +58,9 @@ trait RandomizerRepository
     }
     public function exportRandomGroup($totalGroup): array
     {
-        foreach ($totalGroup as $group)
-           {
-              $groupList[] = array_merge(array(array_search($group, $totalGroup) +1 ), $group);
-           }
+        foreach ($totalGroup as $group) {
+            $groupList[] = array_merge(array(array_search($group, $totalGroup) + 1), $group);
+        }
 
         return $groupList;
     }
@@ -69,7 +68,7 @@ trait RandomizerRepository
     public function exportOrderList($totalOrder)
     {
         foreach ($totalOrder as $order) {
-            $orderList[] = array(((array_search($order, $totalOrder))+1), $order);
+            $orderList[] = array(((array_search($order, $totalOrder)) + 1), $order);
         }
         return $orderList;
     }
@@ -84,10 +83,10 @@ trait RandomizerRepository
             case RandomizerType::CustomPicker:
                 $result = $this->exportOrderList($value);
                 break;
-            default: 
-               break;
-            }
-       return $result;
+            default:
+                break;
+        }
+        return $result;
     }
     public function exportHeading($data): string
     {
@@ -99,36 +98,35 @@ trait RandomizerRepository
             case RandomizerType::CustomPicker:
                 $result = "Order No";
                 break;
-            }
+        }
         return $result;
     }
     public function randomRule(int $randomType)
     {
         $rules = [];
-        switch($randomType)
-        {
+        switch ($randomType) {
             case RandomizerType::Picker:
                 $rules = [
-                 "inputs" => "required|array",
-                 "random_type" => "required|integer",
-                 "results" => "array"
+                    "inputs" => "required|array",
+                    "random_type" => "required|integer",
+                    "results" => "nullable|array"
                 ];
                 break;
             case RandomizerType::GroupPicker:
                 $rules = [
-                 "inputs" => "required|array",
-                 "group_num" => "required|integer",
-                 "random_type" => "required|integer",
-                 "results" => "array"
+                    "inputs" => "required|array",
+                    "group_num" => "required|integer",
+                    "random_type" => "required|integer",
+                    "results" => "nullable|array"
                 ];
                 break;
             case RandomizerType::CustomPicker:
                 $rules = [
-                   "inputs" => "required|array",
-                   "list_num" => "required|integer",
-                   "duplicated" => "required|boolean",
-                   "random_type" => "required|integer",
-                   "results" => "array"
+                    "inputs" => "required|array",
+                    "list_num" => "required|integer",
+                    "duplicated" => "required|boolean",
+                    "random_type" => "required|integer",
+                    "results" => "nullable|array"
                 ];
                 break;
         }

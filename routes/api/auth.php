@@ -13,6 +13,7 @@ Route::post("/forgot-password", "$controller@forgotPassword");
 Route::group(['middleware' => 'auth:api'], function () {
     $controller = "Auth\\AuthController";
     Route::put("/update-profile", "$controller@updateProfile");
+    Route::put("/change-password", "$controller@changePassword");
     Route::get("/profile", "$controller@profile");
     // Route::delete("/delete-account", "$controller@deleteAccount");
 });

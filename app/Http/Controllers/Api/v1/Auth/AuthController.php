@@ -49,7 +49,7 @@ class AuthController extends ApiController
         User::create($data);
 
         $res = $this->makeRequest("password", $data['email'], $password);
-        
+
         return $this->okWithData($res);
     }
 
@@ -158,6 +158,23 @@ class AuthController extends ApiController
         $user = curAuth();
 
         return $this->okWithData(new UserResource($user));
+    }
+
+    public function changePassword(Request $request)
+    {
+        $data = $request->validate([
+            "old_password" => ["required", "string"],
+            "new_password" => ["required", "string", new PasswordRule, "confirmed"],
+        ]);
+
+        $user = curAuth();
+
+        if (!Hash::check($data['old_password'], $user->password))
+            throw ValidationException::withMessages(["old_password" => "The password is incorrect"]);
+
+        $user->update(["password" => bcrypt($data['new_password'])]);
+
+        return $this->updated();
     }
 
     private function makeRequest($grant_type, $email = null, $password = null)
