@@ -35,7 +35,7 @@ class RandomizerController extends ApiController
     $userId = curAuth()->id;
     $data = $request->validated();
     $data['user_id'] = $userId;
-    $data['inputs'] = Arr::except($data, ['results', 'user_id', 'random_type']);
+    $data['inputs'] = Arr::except($data, ['results', 'name', 'user_id', 'random_type']);
     $data['inputs'] = json_encode($data['inputs']);
     $data['results'] = json_encode($data['results']);
 

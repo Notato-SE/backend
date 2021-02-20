@@ -69,7 +69,7 @@ class AuthController extends ApiController
         ]);
 
         $user = User::where("email", request()->email)->firstOrFail();
-        $otp = strtoupper(substr(md5(rand()), 0, 4));
+        $otp = random_int(1000, 9999);
 
         if (($query = DB::table('user_otp')->where("user_id", $user->id))->first()) {
             $query->update([
@@ -92,7 +92,7 @@ class AuthController extends ApiController
     public function forgotPassword(Request $request)
     {
         $data = $request->validate([
-            "otp" => ["required", "string"],
+            "otp" => ["required", "integer"],
             "email" => ["required", "exists:users,email"],
             //"new_password" => ["required", "string", new PasswordRule, "confirmed"],
             "new_password" => ["required", "string"],
