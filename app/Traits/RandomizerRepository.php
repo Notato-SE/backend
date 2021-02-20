@@ -33,7 +33,9 @@ trait RandomizerRepository
                 $newArray[$i] = $arr[rand(0, count($arr) - 1)];
             }
         } else {
-            $newArray = array(array_rand(array_flip($arr), $qty));
+            $newArray = array_rand(array_flip($arr), $qty);
+
+            if (!is_array($newArray)) $newArray = array($newArray);
         }
 
         return $newArray;

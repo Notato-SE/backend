@@ -12,7 +12,8 @@ class Randomizer extends Model
         'random_type',
         'inputs',
         'results',
-        'user_id'
+        'user_id',
+        'name',
     ];
 
     protected $cast = [
