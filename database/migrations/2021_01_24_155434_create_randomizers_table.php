@@ -17,6 +17,7 @@ class CreateRandomizersTable extends Migration
             $table->id();
             $table->json('inputs');
             $table->json('results');
+            $table->string("name");
             // $table->unsignedInteger('user_id');
 
             // $table->unsignedInteger('random_type');

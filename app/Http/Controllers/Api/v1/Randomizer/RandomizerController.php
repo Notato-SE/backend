@@ -51,9 +51,11 @@ class RandomizerController extends ApiController
   {
     return $this->okWithData(new RandomizerCollection(Randomizer::paginate()));
   }
-  public function getRandomResultByID(int $id)
+  public function getRandomResultByID(Randomizer $randomizer)
   {
-    return $this->okWithData(new RandomizerResource(Randomizer::findOrFail($id)));
+    if ($randomizer->user_id !== curAuth()->id) throwAuthExp();
+
+    return $this->okWithData(new RandomizerResource($randomizer));
   }
   public function export(int $id)
   {

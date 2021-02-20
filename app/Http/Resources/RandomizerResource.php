@@ -17,6 +17,7 @@ class RandomizerResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'name' => $this->name,
             'inputs' => json_decode($this->inputs),
             'results' => json_decode($this->results),
             'user_id' => $this->user_id,
