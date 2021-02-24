@@ -20,8 +20,34 @@ trait RandomizerRepository
     public function group_picker(array $arr, int $group_num)
     {
         shuffle($arr);
-
-        return array_chunk($arr, ceil(count($arr) / $group_num));
+        $num = count($arr);
+        for($i = 0; $i < $group_num; ++$i)
+        {
+            $group_index = ceil(($num - $i)/ $group_num);
+            if(!empty($arr))
+            {
+                $members= array_rand(array_flip($arr), $group_index);
+                $group_result[] = ($group_index > 1)? $members : array($members);
+                if($group_index > 1)
+                {
+                    foreach($members as $member)
+                    {
+                        array_splice($arr, array_search($member, $arr), 1);
+                    }
+                  
+                }
+                else{
+                    array_splice($arr, array_search($members, $arr), 1);
+                }
+            }
+            else{
+               break;
+            }
+            
+           
+        }
+        
+        return $group_result;
     }
 
     public function random_order(array $arr, int $qty, bool $duplicate = false)
