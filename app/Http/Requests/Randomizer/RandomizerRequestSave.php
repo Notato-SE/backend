@@ -4,6 +4,8 @@ namespace App\Http\Requests\Randomizer;
 
 use App\Traits\RandomizerRepository;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\ValidationException;
+
 
 class RandomizerRequestSave extends FormRequest
 {
@@ -26,6 +28,8 @@ class RandomizerRequestSave extends FormRequest
     public function rules()
     {
         $newRule = ["name" => "required|string"];
+        if($this->input('random_type') == null)
+            throw ValidationException::withMessages(["random_type" => "random_type is required."]);
         return array_merge($this->randomRule($this->input('random_type')), $newRule);
     }
 }

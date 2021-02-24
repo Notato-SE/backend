@@ -143,7 +143,7 @@ trait RandomizerRepository
             case RandomizerType::GroupPicker:
                 $rules = [
                     "inputs" => "required|array",
-                    "group_num" => "required|integer",
+                    "group_num" => "required|integer|min:0",
                     "random_type" => "required|integer",
                     "results" => "nullable|array"
                 ];
@@ -151,7 +151,7 @@ trait RandomizerRepository
             case RandomizerType::CustomPicker:
                 $rules = [
                     "inputs" => "required|array",
-                    "list_num" => "required|integer",
+                    "list_num" => "required|integer|min:0",
                     "duplicated" => "required|boolean",
                     "random_type" => "required|integer",
                     "results" => "nullable|array"
