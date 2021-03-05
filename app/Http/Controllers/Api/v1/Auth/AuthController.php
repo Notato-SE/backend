@@ -26,7 +26,6 @@ class AuthController extends ApiController
             "password" => ["required", "string", "max:255"],
         ]);
 
-        dd(1);
         if (!Auth::attempt($credential)) {
             throw new AuthenticationException('Username or password is wrong.');
         }
