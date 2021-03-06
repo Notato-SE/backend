@@ -26,7 +26,10 @@ trait RandomizerRepository
         for ($i = 0; $i < $group_num; ++$i) {
             $group_index = ceil(($num - $i) / $group_num);
             if (!empty($arr)) {
-                $members = array_rand(array_flip($arr), $group_index);
+                $members = array_rand(array_keys($arr), $group_index);
+
+                foreach ($members as &$each) $each = $arr[$each];
+
                 $group_result[] = ($group_index > 1) ? $members : array($members);
                 if ($group_index > 1) {
                     foreach ($members as $member) {
