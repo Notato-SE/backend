@@ -28,6 +28,7 @@ trait RandomizerRepository
             if (!empty($arr)) {
                 $members = array_rand(array_keys($arr), $group_index);
 
+                $members = is_array($members) ? $members : array($members);
                 foreach ($members as &$each) $each = $arr[$each];
 
                 $group_result[] = ($group_index > 1) ? $members : array($members);
