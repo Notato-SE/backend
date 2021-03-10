@@ -27,11 +27,12 @@ trait RandomizerRepository
             $group_index = ceil(($num - $i) / $group_num);
             if (!empty($arr)) {
                 $members = array_rand(array_keys($arr), $group_index);
+                $tmpMembers = $members;
 
                 $members = is_array($members) ? $members : array($members);
                 foreach ($members as &$each) $each = $arr[$each];
 
-                $group_result[] = ($group_index > 1) ? $members : array($members);
+                $group_result[] = ($group_index > 1) ? $members : (is_array($members) ? $members : array($members));
                 if ($group_index > 1) {
                     foreach ($members as $member) {
                         array_splice($arr, array_search($member, $arr), 1);
