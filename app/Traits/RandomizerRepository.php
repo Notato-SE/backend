@@ -17,27 +17,31 @@ trait RandomizerRepository
         return array(array_rand(array_flip($arr), $num));
     }
 
-    public function group_picker(array $arr, int $group_num)
+    public function group_picker(array $group, int $group_num)
     {
+        $arr = $group;
         shuffle($arr);
+      
         $num = count($arr);
         for($i = 0; $i < $group_num; ++$i)
         {
             $group_index = ceil(($num - $i)/ $group_num);
             if(!empty($arr))
             {
-                $members= array_rand(array_flip($arr), $group_index);
+                $members= array_rand($arr, $group_index);
                 $group_result[] = ($group_index > 1)? $members : array($members);
                 if($group_index > 1)
                 {
                     foreach($members as $member)
                     {
-                        array_splice($arr, array_search($member, $arr), 1);
+                        unset($arr[$member]);
+                        //array_splice($arr, array_search($member, $arr), 1);
                     }
                   
                 }
                 else{
-                    array_splice($arr, array_search($members, $arr), 1);
+                    unset($arr[$members]);
+                    //array_splice($arr, array_search($members, $arr), 1);
                 }
             }
             else{
@@ -45,6 +49,18 @@ trait RandomizerRepository
             }
             
            
+        }
+      
+        for($j = 0; $j < count($group_result); ++$j)
+        {
+            $group_member = $group_result[$j] ;
+          
+            for($i = 0; $i < count($group_member); ++$i)
+            {  
+                $group_result[$j][$i] = $group[$group_member[$i]];
+          
+            }
+         
         }
         
         return $group_result;
