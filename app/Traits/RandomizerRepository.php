@@ -5,6 +5,7 @@ namespace App\Traits;
 use App\Enums\RandomizerType;
 use App\Exports\RandomizerExport;
 use Maatwebsite\Excel\Concerns\ToArray;
+use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 
 /**
  * 
@@ -43,12 +44,9 @@ trait RandomizerRepository
                     unset($arr[$members]);
                     //array_splice($arr, array_search($members, $arr), 1);
                 }
+            } else {
+                break;
             }
-            else{
-               break;
-            }
-            
-           
         }
       
         for($j = 0; $j < count($group_result); ++$j)
@@ -69,6 +67,8 @@ trait RandomizerRepository
     public function random_order(array $arr, int $qty, bool $duplicate = false)
     {
         $newArray = array();
+
+        if (count($arr) < $qty) throw new BadRequestException("The size of list must be bigger than or equal to the number.");
 
         if ($duplicate) {
             for ($i = 0; $i < $qty; ++$i) {
